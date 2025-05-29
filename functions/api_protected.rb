@@ -7,6 +7,7 @@ def handler(event:, context:)
   if token != "123456"
     return {
       statusCode: 401,
+      headers: { "Content-Type" => "application/json" },
       body: JSON.generate({ error: "Unauthorized" })
     }
   end
