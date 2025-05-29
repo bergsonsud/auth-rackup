@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API Protegida - Netlify + Rack</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    input, button {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    #response {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #eee;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>API Protegida</h1>
+  <label for="token">Bearer Token:</label><br>
+  <input type="text" id="token" placeholder="Ex: 123456" value="123456" /><br>
+  <button onclick="fetchProtected()">Acessar /api/protected</button>
+
+  <div id="response">Resposta aparecerá aqui...</div>
+
+  <script>
+    async function fetchProtected() {
+      const token = document.getElementById("token").value;
+      const responseEl = document.getElementById("response");
+
+      try {
+        const response = await fetch("/api/protected", {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const data = await response.json();
+        responseEl.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        responseEl.textContent = "Erro ao acessar API: " + error;
+      }
+    }
+  </script>
+</body>
+</html>
