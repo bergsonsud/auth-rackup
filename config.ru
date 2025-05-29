@@ -71,6 +71,21 @@ class ApiApp
         { "Content-Type" => "application/json" },
         [JSON.generate(data)]
       ]
+    elsif request.path == "/api/products"
+      # Public endpoint that doesn't require authentication
+      products = [
+        { id: 1, name: "Smartphone", price: 999.99, category: "Electronics" },
+        { id: 2, name: "Laptop", price: 1299.99, category: "Electronics" },
+        { id: 3, name: "Headphones", price: 199.99, category: "Audio" },
+        { id: 4, name: "Coffee Maker", price: 89.99, category: "Kitchen" },
+        { id: 5, name: "Running Shoes", price: 129.99, category: "Sports" }
+      ]
+      
+      [
+        200,
+        { "Content-Type" => "application/json" },
+        [JSON.generate({ products: products })]
+      ]
     else
       [404, { "Content-Type" => "text/plain" }, ["Not Found"]]
     end
